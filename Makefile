@@ -49,7 +49,13 @@ test:  $(TESTS)
 	perf stat --repeat 100 \
                 -e cache-misses,cache-references,instructions,cycles \
 				./test_ref --bench $(TEST_DATA)
-
+perf-serch: $(TESTS)
+	@for test in $(TESTS);do \
+		echo 3 | sudo tee /proc/sys/vm/drop_caches; \
+		perf stat \
+			-e cache-misses,cache-references,instructions,cycles \
+			./$$test --bench; \
+	done		
 bench: $(TESTS)
 	@for test in $(TESTS); do \
 	    echo -n "$$test => "; \
