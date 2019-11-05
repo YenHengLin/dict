@@ -49,7 +49,7 @@ test:  $(TESTS)
 	perf stat --repeat 100 \
                 -e cache-misses,cache-references,instructions,cycles \
 				./test_ref --bench $(TEST_DATA)
-perf-serch: $(TESTS)
+perf-search: $(TESTS)
 	@for test in $(TESTS);do \
 		echo 3 | sudo tee /proc/sys/vm/drop_caches; \
 		perf stat \
